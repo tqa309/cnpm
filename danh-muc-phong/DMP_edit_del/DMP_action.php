@@ -13,7 +13,15 @@ if($_POST['action'] == 'edit')
   ':MaLoaiPhong'    => $_POST['cbMaLoaiPhongSX']
  );
  
- 
+  $sql="
+  SELECT TinhTrangPhong FROM danhmucphong 
+  WHERE MaPhong = '".$_POST["txtMaPhongSX"]."' 
+  ";
+  $res;
+  foreach ($connect->query($sql) as $row) {
+    $res=$row['TinhTrangPhong'];
+  }
+  if($res != '1'){
   $query = "
   UPDATE danhmucphong 
   SET TenPhong = :TenPhong, 
@@ -22,9 +30,11 @@ if($_POST['action'] == 'edit')
   MaLoaiPhong = :MaLoaiPhong
   WHERE MaPhong = :MaPhong
   ";
+  }
   $statement = $connect->prepare($query);
   $statement->execute($data);
   echo json_encode($_POST);
+ 
  
 }
 
