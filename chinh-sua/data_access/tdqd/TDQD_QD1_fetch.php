@@ -2,8 +2,6 @@
 
 include('../Database.php');
 
-$column = array("MaPhong", "TenPhong", "GhiChu", "TinhTrangPhong", "MaLoaiPhong");
-
 $query = "SELECT * FROM loaiphong";
 
 $statement = $connect->prepare($query);

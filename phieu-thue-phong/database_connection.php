@@ -82,8 +82,26 @@ function getKhachToiDa($connect) {
   return $soKhach;
 }
 
-function getPhuThuKhachThu3($connect) {
-  $query = "SELECT SUM(GiaTri) AS GiaTri from thamso WHERE TenThamSo = 'PhuThuKhachThu3'";
+function getPhuThu($connect) {
+  $query = "SELECT MaLoaiKh, HeSoPhuThu from loaikhach";
+
+  $statement = $connect->prepare($query);
+
+  $statement->execute();
+  
+  $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+  $phuthu = [];
+
+  foreach($result as $row) {
+    $phuthu[] = array($row['MaLoaiKh'] => $row['HeSoPhuThu']);
+  }
+
+  return json_encode($result);
+}
+
+function getPhuThuKhachToiDa($connect) {
+  $query = "SELECT SUM(GiaTri) AS GiaTri from thamso WHERE TenThamSo = 'PhuThuKhachToiDa'";
 
   $statement = $connect->prepare($query);
 

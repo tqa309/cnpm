@@ -177,24 +177,39 @@ include('database_connection.php');
     }
     
     var numRow = 0;
-    var PhuThuKhachThu3 = <?php echo getPhuThuKhachThu3($connect); ?>;
+    var PhuThuKhachToiDa = <?php echo getPhuThuKhachToiDa($connect); ?>;
     var PhuThuKhachNN = <?php echo getPhuThuKhachNN($connect); ?>;
-    PhuThuKhachThu3 = Number(PhuThuKhachThu3) * 100 - 100 + "%";
-    PhuThuKhachNN = Number(PhuThuKhachNN) * 100 - 100 + "%";
+    PhuThuKhachToiDa = Math.round(Number(PhuThuKhachToiDa) * 100 - 100) + "%";
+    PhuThuKhachNN = Math.round(Number(PhuThuKhachNN) * 100 - 100) + "%";
+
+    var PhuThuArr = <?php echo getPhuThu($connect); ?>;
+
+    var PhuThu = {};
+
+    PhuThu = PhuThuArr.reduce(function(acc, curr) {
+
+      acc[curr.MaLoaiKh] = Number(curr.HeSoPhuThu) * 100 - 100 + "%";
+      return acc;
+      }, {});
+
+    console.log(PhuThu); 
+
+    
+    var maxRow = <?php echo getKhachToiDa($connect); ?>;
 
     function getPhuThu() {
       var arr = $('.MaLoaiKh');
       var coKhachNN = false;
       for (var i = 0; i < arr.length; i++) {
-        if (arr[i].value === 'NN') {
+        if (arr[i].value !== 'ND') {
           coKhachNN = true;
           break;
         }
       }
       if (coKhachNN) {
         $('#txtPhuThu').val(PhuThuKhachNN);
-      } else if (numRow === 3) {
-        $('#txtPhuThu').val(PhuThuKhachThu3);
+      } else if (numRow === maxRow) {
+        $('#txtPhuThu').val(PhuThuKhachToiDa);
       } else {
         $('#txtPhuThu').val('0%');
       }
@@ -242,7 +257,6 @@ include('database_connection.php');
       var maKhach = <?php echo fill_ma_khach($connect); ?>;
       var tempMaKhach = Number(maKhach);
       
-      var maxRow = <?php echo getKhachToiDa($connect); ?>;
 
       $('#add').click(function(){
         if (numRow < maxRow) {

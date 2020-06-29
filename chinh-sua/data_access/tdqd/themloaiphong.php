@@ -2,10 +2,8 @@
 
 include('../Database.php');
 
-echo json_encode(array('data' => array('success' => 'abc')));
-
 try {
-  $query = "INSERT INTO loaiphong 
+  $query = "INSERT INTO loaiphong
     VALUES (:MaLoaiPhong, :TenLoaiPhong, :DonGiaTieuChuan, :SoLuong)";
   $statement = $connect->prepare($query);
   $statement->execute(array(

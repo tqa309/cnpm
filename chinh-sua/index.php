@@ -1,3 +1,6 @@
+<?php
+include('database_connection.php');
+?>
 <html>
  <head>
   <title>Thay đổi qui định</title>
@@ -73,50 +76,49 @@
 	<div class ="content" style="float:right">    
         <h4>Thay đổi số lượng và đơn giá các loại phòng</h4>      
                 <!-- Modal -->
-                <div class="modal fade" id="loaiPhongModal" role="dialog">
-                    <div class="modal-dialog">
+                <form id="loaiphong">
+                  <div class="modal fade" id="loaiPhongModal" role="dialog">
+                      <div class="modal-dialog">
 
-                        <!-- Modal content-->
-                        <form id="loaiphong" class="modal-content">
-                          <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" style="border:none;">&times;</button>
-                              <h4 class="modal-title">Hóa Đơn Mới</h4>
+                          <!-- Modal content-->
+                          <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" style="border:none;">&times;</button>
+                                <h4 class="modal-title">Hóa Đơn Mới</h4>
+                            </div>
+                            <div class="modal-body">
+                              <div class="form-group row">
+                                <label for="MaLoaiPhong" class="col-sm-3 col-form-label">Mã loại phòng</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control" name="MaLoaiPhong" id="MaLoaiPhong">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="TenLoaiPhong" class="col-sm-3 col-form-label">Tên loại phòng</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control" name="TenLoaiPhong" id="TenLoaiPhong">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="DonGiaTieuChuan" class="col-sm-3 col-form-label">Đơn giá tiêu chuẩn</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control" name="DonGiaTieuChuan" id="DonGiaTieuChuan">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="SoLuong" class="col-sm-3 col-form-label">Số lượng</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control" name="SoLuong" id="SoLuong">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" class="btn btn-success" value="Tạo">
+                            </div>
                           </div>
-                          <div class="modal-body">
-                            <div class="form-group row">
-                              <label for="MaLoaiPhong" class="col-sm-3 col-form-label">Mã loại phòng</label>
-                              <div class="col-sm-9">
-                                <input type="text" class="form-control" name="MaLoaiPhong" id="MaLoaiPhong">
-                              </div>
-                            </div>
-                            <div class="form-group row">
-                              <label for="TenLoaiPhong" class="col-sm-3 col-form-label">Tên loại phòng</label>
-                              <div class="col-sm-9">
-                                <input type="text" class="form-control" name="TenLoaiPhong" id="TenLoaiPhong">
-                              </div>
-                            </div>
-                            <div class="form-group row">
-                              <label for="DonGia" class="col-sm-3 col-form-label">Đơn giá</label>
-                              <div class="col-sm-9">
-                                <input type="text" class="form-control" name="DonGia" id="DonGia">
-                              </div>
-                            </div>
-                            <div class="form-group row">
-                              <label for="SoLuong" class="col-sm-3 col-form-label">Số lượng</label>
-                              <div class="col-sm-9">
-                                <input type="text" class="form-control" name="SoLuong" id="SoLuong">
-                              </div>
-                            </div>
-                            <div class="form-group row">
-                              <label for="LoaiPhongSubmit" class="col-sm-3 col-form-label"></label>
-                            </div>
-                          </div>
-                          <div class="modal-footer">
-                              <button type="button" class="btn btn-success" data-dismiss="modal">Tạo</button>
-                          </div>
-                        </form>
-                    </div>
-                </div>
+                      </div>
+                  </div>
+                </form>
         
         <table id="sample_data1" class="table table-bordered table-striped">
           <thead>
@@ -131,100 +133,154 @@
           </table>
         <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#loaiPhongModal">THÊM LOẠI PHÒNG</button>
         <h4>Thay đổi số lượng loại khách, số lượng khách tối đa trong phòng</h4>
-        <div class="modal fade" id="loaiKhachModal" role="dialog">
-          <div class="modal-dialog">
-            <form id="loaikhach" class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" style="border:none;">&times;</button>
-                <h4 class="modal-title">Loại khách mới</h4>
-              </div>
-              <div class="modal-body">
-                <div class="form-group row">
-                  <label for="phu-thu" class="col-sm-3 col-form-label">Mã loại khách</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" name="MaLoaiKhach" id="MaLoaiKhach">
+        <form id="loaikhach">
+          <div class="modal fade" id="loaiKhachModal" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" style="border:none;">&times;</button>
+                  <h4 class="modal-title">Loại khách mới</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group row">
+                    <label for="MaLoaiKh" class="col-sm-3 col-form-label">Mã loại khách</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" name="MaLoaiKh" id="MaLoaiKh">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="TenLoaiKh" class="col-sm-3 col-form-label">Tên loại khách</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" name="TenLoaiKh" id="TenLoaiKh">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="HeSoPhuThu" class="col-sm-3 col-form-label">Hệ số phụ thu</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" name="HeSoPhuThu" id="HeSoPhuThu">
+                    </div>
                   </div>
                 </div>
-                <div class="form-group row">
-                  <label for="phu-thu" class="col-sm-3 col-form-label">Tên loại khách</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" name="phu-thu" id="phu-thu">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="phu-thu" class="col-sm-3 col-form-label"></label>
+                <div class="modal-footer">
+                <input type="submit" class="btn btn-success" value="Tạo">
                 </div>
               </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-success" data-dismiss="modal">Tạo</button>
-              </div>
-            </form>
-          </div>
-      </div>
+            </div>
+        </div>
+        </form>
         <table id="sample_data2" class="table table-bordered table-striped" style="width: 740px">
           <thead>
             <tr>
               <th>Mã Loại Khách</th>
               <th>Tên Loại Khách</th>
+              <th>Hệ số phụ thu</th>
             </tr>
           </thead>
           <tbody></tbody>
         </table>
         <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#loaiKhachModal" style="margin-bottom: 15px;">THÊM LOẠI KHÁCH</button>
-        <div class="form-group row">
-          <label for="phu-thu" class="col-sm-3 col-form-label">Số lượng khách tối đa trong phòng</label>
-          <div class="col-sm-4">
-            <input type="text" class="form-control" name="phu-thu" id="phu-thu" placeholder="Hiện tại: 3">
-          </div>
-          <input class="btn btn-success" type="submit" value="Cập nhật">
-        </div>        
+        <form id="khachToiDa">
+          <div class="form-group row">
+            <label for="SoKhachToiDa" class="col-sm-3 col-form-label">Số lượng khách tối đa trong phòng</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" name="SoKhachToiDa" id="SoKhachToiDa" placeholder="Hiện tại: <?php echo getKhachToiDa($connect)?>">
+            </div>
+            <input class="btn btn-success" type="submit" value="Cập nhật">
+          </div> 
+        </form>       
         <h4>Thay đổi tỉ lệ phụ thu</h4>
+        <form id="phuThuKhachToiDa">
         <div class="form-group row">
-          <label for="phu-thu" class="col-sm-3 col-form-label">Tỉ lệ phụ thu khách thứ 3</label>
+          <label for="phuThuKhachToiDa" class="col-sm-3 col-form-label">Tỉ lệ phụ thu khách thứ <?php echo getKhachToiDa($connect)?></label>
           <div class="col-sm-4">
-            <input type="text" class="form-control" name="phu-thu" id="phu-thu" placeholder="Hiện tại: 25%">
+            <input type="text" class="form-control" name="phuThuKhachToiDa" id="phuThuKhachToiDa" placeholder="Hiện tại: <?php echo getPhuThuKhachToiDa($connect)?>">
           </div>
           <input class="btn btn-success" type="submit" value="Cập nhật">
         </div>
+        </form>
+        <form id="phuThuKhachNN">
         <div class="form-group row">
-          <label for="phu-thu" class="col-sm-3 col-form-label">Tỉ lệ phụ thu khách nước ngoài</label>
+          <label for="phuThuKhachNN" class="col-sm-3 col-form-label">Tỉ lệ phụ thu khách nước ngoài</label>
           <div class="col-sm-4">
-            <input type="text" class="form-control" name="phu-thu" id="phu-thu" placeholder="Hiện tại: 50%">
+            <input type="text" class="form-control" name="phuThuKhachNN" id="phuThuKhachNN" placeholder="Hiện tại: <?php echo getPhuThuKhachNN($connect)?>">
           </div>
           <input class="btn btn-success" type="submit" value="Cập nhật">
         </div>
+        </form>
   </div>
  </body>
 </html>
 
-<script type="text/javascript" language="javascript" >
+<script>
 $(document).ready(function(){
 
-$("#LoaiPhongSubmit").on('click', () => {
-  event.preventDefault();
-  var formData = $('form').serializeArray();
-  $.ajax({
-  url: 'data_access/tdqd/themloaiphong.php',
-  type: 'POST',
-  data: {
-    "MaLoaiPhong": "A"
-  },
-  success: function(data)
-  {
-  alert("SUCCESS");       
-  console.log('SUCCESS: ' + data.success);
-  },
-  error: function(jqXHR, textStatus, errorThrown)
-  {
-  alert("Error");     
-  console.log('ERRORS: ' + textStatus);
-  },
-  complete: function()
-  {
-  // STOP LOADING SPINNER
-  }})
-})
+    $("#loaiphong").on('submit', function() {
+    var formData = $(this).serialize();
+    console.log(formData);
 
+    $.ajax({
+      url: 'data_access/tdqd/themloaiphong.php',
+      type: 'POST',
+      data: formData,
+      success: function(data)
+      {
+      alert('Tạo loại phòng mới thành công');      
+      }
+    });
+    });
+
+$("#loaikhach").on('submit', function() {
+    var formData = $(this).serialize();
+    console.log(formData);
+    $.ajax({
+    url: 'data_access/tdqd/themloaikhach.php',
+    type: 'POST',
+    data: formData,
+    success: function(data)
+    {
+    alert('Tạo loại khách mới thành công');      
+    }});
+});
+
+
+$("#khachToiDa").on('submit', function() {
+    var formData = $(this).serialize();
+    console.log(formData);
+    $.ajax({
+    url: 'data_access/tdqd/khachToiDa.php',
+    type: 'POST',
+    data: formData,
+    success: function(data)
+    {
+    alert('Cập nhật khách tối đa thành công');      
+    }});
+});
+
+$("#phuThuKhachToiDa").on('submit', function() {
+    var formData = $(this).serialize();
+    console.log(formData);
+    $.ajax({
+    url: 'data_access/tdqd/phuThuKhachToiDa.php',
+    type: 'POST',
+    data: formData,
+    success: function(data)
+    {
+    alert('Cập nhật phụ thu khách tối đa thành công');      
+    }});
+});
+
+$("#phuThuKhachNN").on('submit', function() {
+    var formData = $(this).serialize();
+    console.log(formData);
+    $.ajax({
+    url: 'data_access/tdqd/phuThuKhachNN.php',
+    type: 'POST',
+    data: formData,
+    success: function(data)
+    {
+    alert('Cập nhật phụ thu khách nước ngoài thành công');      
+    }});
+});
 
 var dataTable1 = $('#sample_data1').DataTable({
  "processing" : true,
@@ -260,7 +316,7 @@ $('#sample_data1').on('draw.dt', function(){
   dataType:'json',
   columns:{
    identifier : [0, 'MaLoaiPhong'],
-   editable:[[1, 'TenLoaiPhong'], [2, 'DonGiaTieuChuan'], [3, 'SoLuong']]
+   editable:[[1, 'TenLoaiPhong'], [2, 'DonGiaTieuChuanTieuChuan'], [3, 'SoLuong']]
   },
   restoreButton:false,
   onSuccess:function(data, textStatus, jqXHR)
@@ -281,7 +337,7 @@ $('#sample_data2').on('draw.dt', function(){
   dataType:'json',
   columns:{
    identifier : [0, 'MaLoaiKh'],
-   editable:[[1, 'TenLoaiKh']]
+   editable:[[1, 'TenLoaiKh'], [2, 'HeSoPhuThu']]
   },
   restoreButton:false,
   onSuccess:function(data, textStatus, jqXHR)

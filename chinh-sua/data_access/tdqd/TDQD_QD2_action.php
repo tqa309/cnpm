@@ -7,24 +7,40 @@ if($_POST['action'] == 'edit')
 
  $data = array(
   ':MaLoaiKh'  => $_POST['MaLoaiKh'],
-  ':TenLoaiKh'  => $_POST['TenLoaiKh']
+  ':TenLoaiKh'  => $_POST['TenLoaiKh'],
+  ':HeSoPhuThu'  => $_POST['HeSoPhuThu']
  );
 
  $query = "
  UPDATE loaikhach
- SET TenLoaiKh = :TenLoaiKh
+ SET TenLoaiKh = :TenLoaiKh, HeSoPhuThu = :HeSoPhuThu
  WHERE MaLoaiKh = :MaLoaiKh
  ";
  $statement = $connect->prepare($query);
  $statement->execute($data);
  echo json_encode($_POST);
+
+ if ($_POST['MaLoaiKh'] == 'NN') {
+  try {
+    $query = "UPDATE thamso
+      SET GiaTri = :HeSoPhuThu 
+      WHERE TenThamSo = 'PhuThuKhachNN'";
+    $statement = $connect->prepare($query);
+    $statement->execute(array(
+      ':HeSoPhuThu' => $_POST['HeSoPhuThu']
+    ));
+    echo "okay";
+  } catch (PDOException $e) {
+    echo $e->getMessage();
+  }
+ }
 }
 
 if($_POST['action'] == 'delete')
 {
  $query = "
- DELETE FROM loaiphong 
- WHERE MaLoaiPhong = '".$_POST["MaLoaiPhong"]."'
+ DELETE FROM loaikhach
+ WHERE MaLoaiKh = '".$_POST["MaLoaiKh"]."'
  ";
  $statement = $connect->prepare($query);
  $statement->execute();

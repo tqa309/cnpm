@@ -2,8 +2,6 @@
 
 include('../Database.php');
 
-$column = array("MaPhong", "TenPhong", "GhiChu", "TinhTrangPhong", "MaLoaiPhong");
-
 $query = "SELECT * FROM loaikhach";
 
 $statement = $connect->prepare($query);
@@ -23,6 +21,7 @@ foreach($result as $row)
  $sub_array = array();
  $sub_array[] = $row['MaLoaiKh'];
  $sub_array[] = $row['TenLoaiKh'];
+ $sub_array[] = $row['HeSoPhuThu'];
  $data[] = $sub_array;
 }
 

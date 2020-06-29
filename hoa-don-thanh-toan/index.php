@@ -133,7 +133,7 @@
                                         </thead>
                                         <tbody>
                                             <?php
-                                            include('../CNMP/data_acess/hoadon_fetch.php');
+                                            include('hoadon_fetch.php');
                                             ?>
                                         </tbody>
                                     </table>
@@ -197,7 +197,7 @@
         console.log(maphieuthue);
         $.ajax({
             type: "POST",
-            url: "../CNMP/data_acess/hoadon_action.php",
+            url: "hoadon_action.php",
             data: {
                 "MaPhieuThueCanXuat": maphieuthue,
                 "SoNgayThue": days
@@ -237,7 +237,7 @@
         console.log(data);
         $.ajax({
             type: "POST",
-            url: "../CNMP/data_acess/hoadon_data.php",
+            url: "hoadon_data.php",
             data: data,
             success: function(data) {
                 alert(data);
