@@ -6,11 +6,7 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
-  <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <script src="https://markcell.github.io/jquery-tabledit/assets/js/tabledit.min.js"></script>
   <link rel="stylesheet" href="css/bao-cao.css">
   <link rel="stylesheet" href="../css/style.css">
 
@@ -71,9 +67,8 @@
     </div>
 	<div class ="content" style="float:right">
   <h4>Báo Cáo Doanh Thu Theo Loại Phòng</h4>
-    <form id="loaiphong">
-      <label for="MaLoaiPhong" class="col-sm-2 col-form-label">Chọn Tháng</label>
-      <div class="col-sm-3">
+    <form id="baocao">
+    <div class="col-sm-2" style="padding: 0;">
         <select name="thang" id="thang">
           <option>- Tháng -</option>
           <option value="1">1</option>
@@ -90,7 +85,7 @@
           <option value="12">12</option>
         </select>
         
-        <select class="selectpicker" name="nam" id="nam"  data-live-search="true">
+        <select name="nam" id="nam">
           <option>- Năm -</option>
           <option value="2020">2020</option>
           <option value="2019">2019</option>
@@ -105,7 +100,7 @@
           <option value="2010">2010</option>
         </select>
       </div>
-      <input class="btn btn-success" type="submit" id="LoaiPhongSubmit" value="Xuất báo cáo">
+      <input class="btn btn-success" type="submit" id="LoaiPhongSubmit" value="Xem báo cáo">
     </form>
     <table id="doanh_thu" class="table table-bordered table-striped">
       <thead>
@@ -116,30 +111,26 @@
           <th>Tỉ lệ</th>   
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody id="ctbc"></tbody>
     </table>
   </div>
  </body>
 </html>
 
-<script type="text/javascript" language="javascript" >
+<script>
 $(document).ready(function(){
-  var dataTable2 = $('#doanh_thu').DataTable({
- "processing" : true,
- "serverSide" : true,
- "searching": false,
- "paging": false,
- "info": false,
- "ordering": false,
- "order" : [],
- "ajax" : {
-  url:"data_access/bc/bao_cao_fetch.php",
-  type:"POST"
- }
-});
+  $('#baocao').on('submit', () => {
+    event.preventDefault();
+    var formData = $('#baocao').serialize();
 
-$('#doanh_thu').on('draw.dt', function(){
- 
-});
+    $.ajax({
+    url: 'data_access/bc/bao_cao_fetch.php',
+    type: 'POST',
+    data: formData,
+    success: function(data)
+    {
+      $('#ctbc').html(data);
+    }});
+  });
 }); 
 </script>

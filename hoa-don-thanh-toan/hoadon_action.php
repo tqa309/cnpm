@@ -10,15 +10,17 @@ if(isset($_POST["MaPhieuThueCanXuat"])){
   $statement->execute($data);
   $result=$statement->fetchAll();
   foreach($result as $row) {
-    echo '<tr id="' . $row["MaPhieuThue"] . '"><td>' . $row["MaPhieuThue"]. "</td>" .
-    "<td>" . $row["NgayBdThue"] . "</td>".
-    "<td>" . $row["DonGiaTieuChuan"] . "</td>".
-    "<td>" . $row["DonGiaDuocTinh"] . "</td>".
-    "<td>" . $row["SoLuongKh"] . "</td>".
-    "<td>" . $row["MaPhong"] . "</td>". 
-    "<td class='thanhtien'>" . strval(intval($row["DonGiaDuocTinh"]) * intval($_POST["SoNgayThue"])) . "</td><td>".
-    '<button onclick="xoaphieu(' . $row["MaPhieuThue"] . ')">drop</button></td></tr>';
-     
+    $thanhtien = strval(intval($row['DonGiaDuocTinh']) * intval($_POST['SoNgayThue']));
+    echo <<<EOF
+      <tr id=$row[MaPhieuThue]><td class="maPhieuThue">$row[MaPhieuThue] </td> 
+      <td class="NgayBdThue">$row[NgayBdThue]</td>
+      <td>$row[DonGiaTieuChuan]</td>
+      <td class="donGiaDuocTinh">$row[DonGiaDuocTinh]</td>
+      <td>$row[SoLuongKh]</td>
+      <td>$row[MaPhong]</td> 
+      <td class="thanhTien">$thanhtien</td><td>
+      <button onclick=xoaphieu($row[MaPhieuThue])>drop</button></td></tr>
+    EOF;
 }
 
 }

@@ -1,50 +1,118 @@
 <?php
 
-include('../Database.php');
+//database_connection.php
 
-$column = array("MaLoaiPhong", "DoanhThu", "TiLe");
+$connect = new PDO("mysql:host=localhost:3308; dbname=qlks;", "root", "");
 
-$query = "SELECT * FROM ct_baocaodt LIMIT 3";
+
+function fill_ma_khach($connect) {
+  $query = "SELECT COUNT(MaBaoCaoDT) AS SoBCDaCo from baocaodt";
+
+  $statement = $connect->prepare($query);
+
+  $statement->execute();
+  
+  $result = $statement->fetchAll();
+
+  foreach($result as $row) {
+    $soKhach = intval($row['SoBCDaCo']) + 1;
+  }
+
+  return $soKhach;
+}
+
+$maBaoCao = fill_ma_khach($connect);
+
+function fill_ma_ctbaocao($connect) {
+  $query = "SELECT COUNT(MaCT_BaoCaoDT) AS SoCTBCDaCo from ct_baocaodt";
+
+  $statement = $connect->prepare($query);
+
+  $statement->execute();
+  
+  $result = $statement->fetchAll();
+
+  foreach($result as $row) {
+    $soKhach = intval($row['SoCTBCDaCo']) + 1;
+  }
+
+  return $soKhach;
+}
+
+$maCtBaoCao = fill_ma_ctbaocao($connect);
+
+$maBaoCao = $_POST['thang'] . $_POST['nam'];
+
+$query = "SELECT sum(TriGia) as DoanhThu, TenLoaiPhong, dmp.MaLoaiPhong 
+  from hoadon hd join ct_hoadon cthd on cthd.MaHD = hd.MaHD
+    join phieuthue pt on pt.MaPhieuThue = cthd.MaPhieuThue
+    join danhmucphong dmp on dmp.MaPhong = pt.MaPhong
+    join loaiphong lp on lp.MaLoaiPhong = dmp.MaLoaiPhong
+  where month(hd.NgayLap) = :thang and year(hd.NgayLap) = :nam
+  group by dmp.MaLoaiPhong, TenLoaiPhong";
 
 $statement = $connect->prepare($query);
 
-$statement->execute();
+$data  = array(
+  ':thang' => $_POST['thang'],
+  ':nam' => $_POST['nam']
+);
 
-$number_filter_row = $statement->rowCount();
-
-$statement->execute();
+$statement->execute($data);
 
 $result = $statement->fetchAll();
 
-$data = array();
+$sum = 0;
 
-$i = 1;
-
-foreach($result as $row)
-{
- $sub_array = array();
- $sub_array[] = $i;
- $i++;
- $sub_array[] = $row['MaLoaiPhong'];
- $sub_array[] = number_format($row['DoanhThu']) . 'đ';
- $sub_array[] = $row['TiLe'];
- $data[] = $sub_array;
+foreach($result as $row) {
+  $sum += intval($row['DoanhThu']);
 }
 
-function count_all_data($connect)
-{
- $query = "SELECT * FROM ct_baocaodt LIMIT 3";
- $statement = $connect->prepare($query);
- $statement->execute();
- return $statement->rowCount();
-}
+$i = 0;
+$tiLe = 0;
 
-$output = array(
- 'recordsTotal' => count_all_data($connect),
- 'recordsFiltered' => $number_filter_row,
- 'data'   => $data
+$query = "REPLACE INTO baocaodt values (:MaBaoCaoDT, :Ngay, :Thang)";
+
+$statement = $connect->prepare($query);
+
+$date = date('Y-m-d');
+
+$data  = array(
+  ':MaBaoCaoDT' => $maBaoCao,
+  ':Ngay' => $date,
+  ':Thang' => $_POST['thang']
 );
 
-echo json_encode($output);
+$statement->execute($data);
 
-?>
+foreach($result as $row) {
+  $i++;
+  $tiLe = intval(intval($row['DoanhThu']) / $sum * 100);
+
+  $query = "REPLACE INTO ct_baocaodt values (:MaCT_BaoCaoDT, :DoanhThu, :TiLe, :MaBaoCaoDT, :MaLoaiPhong)";
+
+  $statement = $connect->prepare($query);
+
+  $maCtBaoCao = $maBaoCao . $row['MaLoaiPhong'];
+
+  $data  = array(
+    ':MaCT_BaoCaoDT' => $maCtBaoCao,
+    ':DoanhThu' => $row['DoanhThu'],
+    ':TiLe' => $tiLe,
+    ':MaBaoCaoDT' => $maBaoCao,
+    ':MaLoaiPhong' => $row['MaLoaiPhong']
+  );
+
+  $statement->execute($data);
+
+  $doanhThu = number_format($row['DoanhThu']) . 'đ';
+
+  echo <<<EOF
+  <tr>
+    <td>$i</td>
+    <td>$row[TenLoaiPhong]</td>
+    <td>$doanhThu</td>
+    <td>$tiLe</td>
+  <tr>
+  EOF;
+}

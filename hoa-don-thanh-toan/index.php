@@ -1,3 +1,7 @@
+<?php
+    include('database_connection.php');
+?>
+
 <html>
 
 <head>
@@ -22,7 +26,7 @@
     <div class="sidenav" >
 	  
   	<a href="../danh-muc-phong"><i class="fa fa-table"></i> Danh mục phòng</a>
-  	<a href="../phieu-thue-phong"><i class="fa fa-address-book"></i> Phiếu thuê phòng</a>
+  	<a href="../phieu-thue-phong"><i class="fa fa-txtDiaChiress-book"></i> Phiếu thuê phòng</a>
     <a data-toggle="collapse" data-target="#collapse1"><i class="fa fa-search"></i> Tra cứu</a>
     <div id="collapse1" class="panel-collapse collapse">
         <ul class="list-group">
@@ -75,31 +79,26 @@
             <h2>Quản lí hóa đơn</h2>
         </div>
 
-        <form action="/data_acess/hoadon_data.php" method="post" id="tthoadon">
+        <form id="ThongTinHoaDon">
             <div class="form-group">
                 <label>Mã Hóa Đơn</label>
-                <input type="text" class="form-control" name="mahd">
+                <input readonly type="text" class="form-control" name="txtMaHD" value="<?php echo fill_ma_hd($connect)?>">
             </div>
             <div class="form-group">
                 <label>Khách Hàng / Cơ Quan:</label>
-                <input type="text" class="form-control" name="coquan">
+                <input type="text" class="form-control" name="txtCoQuan">
             </div>
             <div class="form-group">
                 <label>Địa Chỉ</label>
-                <input type="text" class="form-control" name="add">
+                <input type="text" class="form-control" name="txtDiaChi">
             </div>
             <div class="form-group">
                 <label>Ngày Lập Hóa Đơn</label>
-                <input class="form-control" type="date" name="ngaylaphoadon" id="ngaylaphoadon">
-
+                <input class="form-control" type="date" name="txtNgayLapHD" id="txtNgayLapHD">
             </div>
 
-
-
-
-
             <!-- Button trigger modal -->
-            <div style="display:flex;">
+            <div class="form-group">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                     Thêm Phiếu Thuê
                 </button>
@@ -111,7 +110,7 @@
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <h3 class="modal-title" id="exampleModalLabel">Danh sách phiếu thuê chưa thanh toán</h3>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -126,7 +125,7 @@
                                                 <th>Ngày Bắt Đầu Thuê</th>
                                                 <th>Đơn Giá Tiêu Chuẩn</th>
                                                 <th>Đơn Giá Được Tính </th>
-                                                <th>Số Lượng Khách Hàng</th>
+                                                <th>Số Khách</th>
                                                 <th>Mã Phòng</th>
                                                 <th></th>
                                             </tr>
@@ -146,7 +145,7 @@
                     </div>
                 </div>
             </div>
-            <div class="panel-body">
+            <div>
                 <div class="table-responsive">
                     <table id="sample_data" class="table table-bordered table-striped">
                         <thead>
@@ -155,7 +154,7 @@
                                 <th>Ngày Bắt Đầu Thuê</th>
                                 <th>Đơn Giá Tiêu Chuẩn</th>
                                 <th>Đơn Giá Được Tính </th>
-                                <th>Số Lượng Khách Hàng</th>
+                                <th>Số Khách</th>
                                 <th>Mã Phòng</th>
                                 <th>Thành tiền</th>
                                 <th></th>
@@ -167,16 +166,13 @@
                     </table>
                 </div>
             </div>
-            <div style="display:flex;position:absolute;right:85px;" class="">
-                <p> <b>TỔNG HÓA ĐƠN:</b> </p>
-                <input type="text" id="tonghoadon">
-
+            <div class="form-group">
+                <label>Tổng hóa đơn</label>
+                <input readonly class="form-control" type="text" name="txtTriGia" id="txtTriGia">
             </div>
-            <br>
-            <br>
-            <div style="display:flex;justify-content:center;">
-                <input type="submit" value="Tạo Hóa Đơn " style="margin-right:30px;">
-                <button> In Hóa Đơn</button>
+            <div align="center">
+                <input  class="btn btn-success" type="submit" value="Tạo Hóa Đơn">
+                <button class="btn btn-primary">In Hóa Đơn</button>
             </div>
         </form>
     </div>
@@ -205,7 +201,7 @@
             success: function(data) {
                 $('#hoadon').append(data);
 
-                tinhtonghoadon();
+                tinhtxtTriGia();
             }
         });
 
@@ -215,45 +211,72 @@
         console.log(xoa);
         $('#' + xoa).remove();
 
-        tinhtonghoadon();
+        tinhtxtTriGia();
     }
 
 
-    function tinhtonghoadon() {
+    function tinhtxtTriGia() {
         var tong = 0;
         var arr = $('.thanhtien');
         for (var i = 0; i < arr.length; i++) {
             tong += Number(arr[i].innerText);
         }
 
-        $('#tonghoadon').val(tong);
+        $('#txtTriGia').val(tong);
 
     }
-    $('#tthoadon').on('submit', function() {
+    $('#ThongTinHoaDon').on('submit', function() {
         event.preventDefault();
-        var data = $(this).serialize();
-        // data = 'mahd=1&coquan=bca&add=123'
-        data += '&tongtien=' + $('#tonghoadon').val();
-        console.log(data);
+        var formData = $(this).serialize();
+
+        
+        var maPhieuThue = $('.maPhieuThue');
+        var i;
+        for (i = 0; i < maPhieuThue.length; i++) {
+            formData += '&maPhieuThue[]=' + maPhieuThue[i].innerText;
+        }
+
+        var soNgayThue = $('.soNgayThue');
+        for (i = 0; i < soNgayThue.length; i++) {
+            formData += '&NgayBdThue[]=' + soNgayThue[i].innerText;
+        }
+
+        var thanhTien = $('.thanhTien');
+        for (i = 0; i < thanhTien.length; i++) {
+            formData += '&thanhTien[]=' + thanhTien[i].innerText;
+        }
+
+        var donGiaDuocTinh = $('.donGiaDuocTinh');
+        for (i = 0; i < donGiaDuocTinh.length; i++) {
+            formData += '&donGiaDuocTinh[]=' + donGiaDuocTinh[i].innerText;
+        }
+
+        for (i = 0; i < donGiaDuocTinh.length; i++) {
+            formData += '&soNgayThue[]=' + Math.round(Number(thanhTien[i].innerText) / Number(donGiaDuocTinh[i].innerText));
+        }
+        
+        var query = formData.replace(/\[/g,"%5B").replace(/\]/g,"%5D");
+
+        console.log(query);
         $.ajax({
             type: "POST",
-            url: "hoadon_data.php",
-            data: data,
+            url: "insert.php",
+            data: query,
             success: function(data) {
-                alert(data);
             }
         });
     });
 
     function dateDiff(date) {
         var start = date;
-        var end = $("#ngaylaphoadon").val();
+        var end = $("#txtNgayLapHD").val();
         var days = (Date.parse(end) - Date.parse(start)) / (1000 * 60 * 60 * 24);
         console.log(days);
         if (days === 0) days++;
         return days;
     }
     $(document).ready(function() {
-        $('#ngaylaphoadon').val(new Date().toJSON().slice(0, 10));
+        $('#txtNgayLapHD').val(new Date().toJSON().slice(0, 10));
     });
+
 </script>

@@ -20,6 +20,6 @@ $result=$statement->fetchAll();
     "<td>".$row["DonGiaDuocTinh"]."</td>".
     "<td>".$row["SoLuongKh"]."</td>".
     "<td>".$row["MaPhong"]."</td><td>". 
-    '<button onclick="xuatphieu('."'".$row["MaPhieuThue"]. '1'."'".",'".$row["NgayBdThue"]. "'".')">chon</button></td><tr>';
+    '<button type="button" onclick="xuatphieu('."'".$row["MaPhieuThue"]. '1'."'".",'".$row["NgayBdThue"]. "'".')">chon</button></td></tr>';
      
 }

@@ -5,13 +5,13 @@ include('../data_acess/Database.php');
 
 
     $result= "INSERT INTO hoadon (MaHD,TriGia,TenKh,DiaChi,NgayLap) 
-    VALUES (:mahoadon,:trigia,:khachhang,:diachi,:ngay) ";
+    VALUES (:MaHD,:TriGia,:TenKh,:DiaChi,:NgayLap) ";
     $data = array(
-        ':mahoadon' => $_POST["mahd"],
-        ':trigia' => $_POST["tongtien"],
-        ':khachhang' => $_POST["coquan"],
-        ':diachi' => $_POST["add"],
-        'ngay'=> $_POST["ngaylaphoadon"]
+        ':MaHD' => $_POST['txtMaHD'], 
+       ':TriGia' => $_POST['txtTriGia'],
+       ':TenKh' => $_POST['txtCoQuan'],
+       ':DiaChi' => $_POST['txtDiaChi'],
+       ':NgayLap' => $_POST['txtNgayLapHD']
     );
     $statement = $conn->prepare($result);
     $statement->execute($data);

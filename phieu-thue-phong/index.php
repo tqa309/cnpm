@@ -179,8 +179,8 @@ include('database_connection.php');
     var numRow = 0;
     var PhuThuKhachToiDa = <?php echo getPhuThuKhachToiDa($connect); ?>;
     var PhuThuKhachNN = <?php echo getPhuThuKhachNN($connect); ?>;
-    PhuThuKhachToiDa = Math.round(Number(PhuThuKhachToiDa) * 100 - 100) + "%";
-    PhuThuKhachNN = Math.round(Number(PhuThuKhachNN) * 100 - 100) + "%";
+    PhuThuKhachToiDa = Math.round(Number(PhuThuKhachToiDa) * 100 - 100);
+    PhuThuKhachNN = Math.round(Number(PhuThuKhachNN) * 100 - 100);
 
     var PhuThuArr = <?php echo getPhuThu($connect); ?>;
 
@@ -188,30 +188,35 @@ include('database_connection.php');
 
     PhuThu = PhuThuArr.reduce(function(acc, curr) {
 
-      acc[curr.MaLoaiKh] = Number(curr.HeSoPhuThu) * 100 - 100 + "%";
+      acc[curr.MaLoaiKh] = Number(curr.HeSoPhuThu) * 100 - 100;
       return acc;
       }, {});
 
     console.log(PhuThu); 
 
     
-    var maxRow = <?php echo getKhachToiDa($connect); ?>;
+    var soKhachToiDa = <?php echo getKhachToiDa($connect); ?>;
 
     function getPhuThu() {
       var arr = $('.MaLoaiKh');
       var coKhachNN = false;
+      var phuThu = 0;
+      var checked = []
+
       for (var i = 0; i < arr.length; i++) {
-        if (arr[i].value !== 'ND') {
-          coKhachNN = true;
-          break;
+        var temp = arr[i].value;
+        if (checked.indexOf(temp) === -1) {
+          phuThu += PhuThu[temp];
+          checked.push(temp);
         }
       }
-      if (coKhachNN) {
-        $('#txtPhuThu').val(PhuThuKhachNN);
-      } else if (numRow === maxRow) {
-        $('#txtPhuThu').val(PhuThuKhachToiDa);
+      console.log(phuThu, checked);
+      
+      
+      if (numRow === soKhachToiDa) {
+        $('#txtPhuThu').val(PhuThuKhachToiDa + phuThu + '%');
       } else {
-        $('#txtPhuThu').val('0%');
+        $('#txtPhuThu').val(phuThu + '%');
       }
 
       getDonGiaDuocTinh(Number(DonGiaTieuChuan));
@@ -259,7 +264,7 @@ include('database_connection.php');
       
 
       $('#add').click(function(){
-        if (numRow < maxRow) {
+        if (numRow < soKhachToiDa) {
           maKhach = tempMaKhach + numRow;
           numRow++;
           count++;
@@ -273,7 +278,7 @@ include('database_connection.php');
           html += '<td><button type="button" name="remove" class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-minus"></span></button></td>';
           $('tbody').append(html);
         } else {
-          $('#themKhachError').html('<div class="alert alert-danger">Vượt quá khách tối đa</div>');
+          $('#themKhachError').html('<div class="alert alert-danger">Vượt quá khách tối đa: '+ soKhachToiDa +'</div>');
         }
 
         getPhuThu();
