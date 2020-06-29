@@ -288,7 +288,7 @@ include('database_connection.php');
       var count = 1;
       if($(this).val() == '')
       {
-        error += '<p>Enter Item name at '+count+' Row</p>';
+        error += '<p>Thiếu thông tin ở ô Mã Khách Hàng</p>';
         return false;
       }
       count = count + 1;
@@ -297,7 +297,7 @@ include('database_connection.php');
       var count = 1;
       if($(this).val() == '')
       {
-        error += '<p>Enter Item name at '+count+' Row</p>';
+        error += '<p>Thiếu thông tin ở ô Tên Khách Hàng</p>';
         return false;
       }
       count = count + 1;
@@ -308,7 +308,7 @@ include('database_connection.php');
 
       if($(this).val() == '')
       {
-        error += '<p>Select Item Category at '+count+' row</p>';
+        error += '<p>Thiếu thông tin ở ô CMND</p>';
         return false;
       }
 
@@ -321,7 +321,7 @@ include('database_connection.php');
 
       if($(this).val() == '')
       {
-        error += '<p>Select Item Category at '+count+' row</p>';
+        error += '<p>Thiếu thông tin ở ô Địa Chỉ</p>';
         return false;
       }
 
@@ -333,7 +333,7 @@ include('database_connection.php');
       var count = 1;
       if($(this).val() == '')
       {
-        error += '<p>Enter Item name at '+count+' Row</p>';
+        error += '<p>Thiếu thông tin ở ô Mã Loại Khách Hàng</p>';
         return false;
       }
       count = count + 1;
@@ -357,7 +357,7 @@ include('database_connection.php');
           if(data == 'ok')
           {
             $('#item_table').find('tr:gt(0)').remove();
-            $('#error').html('<div class="alert alert-success">Item Details Saved</div>');
+            $('#error').html('<div class="alert alert-success">Dữ liệu khách hàng đã được thêm vào</div>');
           }
         }
       });
