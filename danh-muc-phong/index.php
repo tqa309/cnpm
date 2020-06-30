@@ -97,7 +97,7 @@ include('DMP_insert/database_connection.php');
                 <th>Tình Trạng Phòng</th>
                 <th>Ghi Chú</th>
                 
-                <th><button type="button" name="btnThemhang" class="btn btn-success btn-xs add"><span class="glyphicon glyphicon-plus"></span> Thêm hàng</button></th>
+                <th><button type="button" name="btnThemhang" class="btn btn-success btn-xs add"><span class="glyphicon glyphicon-plus"></span> Thêm phòng</button></th>
               </tr>
             </thead>
             <tbody id="tbody"></tbody>

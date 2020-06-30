@@ -19,7 +19,7 @@ if(isset($_POST["MaPhieuThueCanXuat"])){
       <td>$row[SoLuongKh]</td>
       <td>$row[MaPhong]</td> 
       <td class="thanhTien">$thanhtien</td><td>
-      <button onclick=xoaphieu($row[MaPhieuThue])>drop</button></td></tr>
+      <button onclick=xoaphieu($row[MaPhieuThue])>-</button></td></tr>
     EOF;
 }
 

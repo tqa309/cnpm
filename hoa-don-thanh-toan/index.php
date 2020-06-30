@@ -263,6 +263,7 @@
             url: "insert.php",
             data: query,
             success: function(data) {
+                alert('Tạo hóa đơn thành công!');
             }
         });
     });
