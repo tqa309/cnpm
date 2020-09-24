@@ -53,8 +53,6 @@ include('database_connection.php');
     </div>
     <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
-
-        <!-- Modal content-->
         <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -75,12 +73,9 @@ include('database_connection.php');
     </div>
 	<div class ="content" style="float:right">    
         <h4>Thay đổi số lượng và đơn giá các loại phòng</h4>      
-                <!-- Modal -->
                 <form id="loaiphong">
                   <div class="modal fade" id="loaiPhongModal" role="dialog">
                       <div class="modal-dialog">
-
-                          <!-- Modal content-->
                           <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" style="border:none;">&times;</button>

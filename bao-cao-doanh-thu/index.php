@@ -108,7 +108,7 @@
           <th>STT</th>
           <th>Loại Phòng</th>
           <th>Doanh Thu</th>
-          <th>Tỉ lệ</th>   
+          <th>Tỉ lệ (%)</th>   
         </tr>
       </thead>
       <tbody id="ctbc"></tbody>

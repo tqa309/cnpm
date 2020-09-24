@@ -26,7 +26,7 @@
     <div class="sidenav" >
 	  
   	<a href="../danh-muc-phong"><i class="fa fa-table"></i> Danh mục phòng</a>
-  	<a href="../phieu-thue-phong"><i class="fa fa-txtDiaChiress-book"></i> Phiếu thuê phòng</a>
+  	<a href="../phieu-thue-phong"><i class="fa fa-address-book"></i> Phiếu thuê phòng</a>
     <a data-toggle="collapse" data-target="#collapse1"><i class="fa fa-search"></i> Tra cứu</a>
     <div id="collapse1" class="panel-collapse collapse">
         <ul class="list-group">
@@ -236,9 +236,9 @@
             formData += '&maPhieuThue[]=' + maPhieuThue[i].innerText;
         }
 
-        var soNgayThue = $('.soNgayThue');
-        for (i = 0; i < soNgayThue.length; i++) {
-            formData += '&NgayBdThue[]=' + soNgayThue[i].innerText;
+        var maPhong = $('.maPhong');
+        for (i = 0; i < maPhong.length; i++) {
+            formData += '&maPhong[]=' + maPhong[i].innerText;
         }
 
         var thanhTien = $('.thanhTien');

@@ -87,7 +87,7 @@
                                 <th>Ngày Bắt Đầu Thuê</th>
                                 <th>Đơn Giá Tiêu Chuẩn</th>
                                 <th>Đơn Giá Được Tính</th>
-                                <th>Số Lượng Khaschh Hàng</th>
+                                <th>Số Lượng Khách Hàng</th>
                                 <th>Mã Phòng</th>
                             </tr>
                         </thead>

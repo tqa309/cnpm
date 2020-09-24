@@ -35,7 +35,7 @@
 
   $query = "
    INSERT INTO ct_hoadon 
-       (MaPhieuThue, SoNgayThue, ThanhTien, DonGiaDuocTinh, MaHD) 
+       (MaPhieuThue, SoNgayThue, ThanhTien, DonGiaDuocTinh, MaHD)
        VALUES (:maPhieuThue, :soNgayThue ,:thanhTien, :donGiaDuocTinh, :MaHD)
   ";
 
@@ -43,6 +43,19 @@
   $statement = $connect->prepare($query);
 
   $statement->execute($data);
+
+  $data = array(
+    ':maPhong'   => $_POST["maPhong"][$count]
+   );
+ 
+   $query = "
+    UPDATE danhmucphong SET TinhTrangPhong = 0 Where MaPhong = :maPhong 
+   ";
+ 
+ 
+   $statement = $connect->prepare($query);
+ 
+   $statement->execute($data);
  }
 
 

@@ -25,6 +25,19 @@
    
      $statement->execute($data);
 
+     $query = "
+     UPDATE danhmucphong SET TinhTrangPhong = 1 WHERE MaPhong = :txtMaPhong;
+    ";
+    
+     $data = array(
+        ':txtMaPhong' => $_POST['txtMaPhong']
+     );
+     
+    $statement = $connect->prepare($query);
+    
+    $statement->execute($data);
+    
+
  for($count = 0; $count < count($_POST["txtMaKhachHang"]); $count++)
  {
   $data = array(

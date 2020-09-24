@@ -3,7 +3,7 @@
 
   $_POST['query'] = 'A';
 
-  $query = "SELECT * FROM danhmucphong WHERE TinhTrangPhong = 1 AND MaLoaiPhong = :MaLoaiPhong AND MaPhong LIKE '%" . $_POST['query'] . "%'";
+  $query = "SELECT * FROM danhmucphong WHERE TinhTrangPhong = 0 AND MaLoaiPhong = :MaLoaiPhong AND MaPhong LIKE '%" . $_POST['query'] . "%'";
 
   $statement = $connect->prepare($query);
 

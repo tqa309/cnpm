@@ -87,7 +87,7 @@ $statement->execute($data);
 
 foreach($result as $row) {
   $i++;
-  $tiLe = intval(intval($row['DoanhThu']) / $sum * 100);
+  $tiLe = round(intval($row['DoanhThu']) / $sum * 100, 2);
 
   $query = "REPLACE INTO ct_baocaodt values (:MaCT_BaoCaoDT, :DoanhThu, :TiLe, :MaBaoCaoDT, :MaLoaiPhong)";
 
